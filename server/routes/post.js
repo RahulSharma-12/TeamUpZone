@@ -1,5 +1,5 @@
 import express from "express";
-import { createPost, deletePost, getAllPost, likeAndUnlikePost, updatePost } from "../controllers/post.js";
+import { addComment, createPost, deleteComment, deletePost, getAllPost, likeAndUnlikePost, updatePost } from "../controllers/post.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 
 const app = express.Router();
@@ -13,5 +13,7 @@ const app = express.Router();
  app.put("/post/:id",isAuthenticated,updatePost);
  app.delete("/post/:id",isAuthenticated,deletePost);
  app.get("/post",getAllPost);
+ app.put("/post/comment/:id",isAuthenticated,addComment);
+ app.delete("/post/comment/delete/:id",isAuthenticated,deleteComment);
 
 export default app; 

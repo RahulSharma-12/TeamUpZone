@@ -53,7 +53,8 @@ const postSchema = new mongoose.Schema({
      likes:[
      {
             
-          type : mongoose.Schema.Types.ObjectId,
+          type : mongoose.Schema.ObjectId,
+          // type : mongoose.Schema.Types.ObjectId,
           ref:'User',
             
      },
@@ -61,17 +62,18 @@ const postSchema = new mongoose.Schema({
     comments:[
         {
                users:{
-             type : mongoose.Schema.Types.ObjectId,
+             type : mongoose.Schema.ObjectId,
+            //  type : mongoose.Schema.Types.ObjectId,
              ref:'User',
                },
-               comments : {
+               comment : {
                 type : String,
-                required:false, 
+                required:true, 
             },
         },
        ],
      
-
+ 
 })
 
 

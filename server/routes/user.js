@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteMyProfile, getMyPost, getUserPosts, getUserProfile, login, logout, register, updatePassword, updateProfile } from "../controllers/user.js";
+import { deleteMyProfile, forgotPassword, getMyPost, getUserPosts, getUserProfile, login, logout, register, resetPassword, updatePassword, updateProfile } from "../controllers/user.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 import { getAllPost } from "../controllers/post.js";
 // import { createPost } from "../controllers/post.js";
@@ -19,4 +19,6 @@ app.get("/my/posts" , isAuthenticated,getMyPost);
 app.get("/userposts/:id" , isAuthenticated,getUserPosts);
 app.get("/users/:id",isAuthenticated,getUserProfile)
 app.get("/users/:id", isAuthenticated,getAllPost);
+app.post("/forgot/password",forgotPassword);
+// app.put("/password/reset/:token",resetPassword);
 export default app;

@@ -2,6 +2,7 @@ import mongoose, { model } from "mongoose";
 import bcrypt from "bcrypt"
 
  import jwt from "jsonwebtoken";
+ import crypto from "crypto";
 const userSchema = new mongoose.Schema({
 
    name:{
@@ -40,19 +41,19 @@ const userSchema = new mongoose.Schema({
   },
    
 
-  followers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
+//   followers: [
+//     {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "User",
+//     },
+//   ],
 
-  following: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
+//   following: [
+//     {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "User",
+//     },
+//   ],
 
   resetPasswordToken: String,
   resetPasswordExpire: Date,
@@ -81,5 +82,19 @@ userSchema.methods.generateToken = function (){
    return jwt.sign({_id:this._id},process.env.JWT_SECRET);
 };
 
+
+userSchema.methods.getResetPasswordToken = function (){
+   const resetToken = crypto.randomBytes(20).toString("hex");
+
+   console.log(resetToken);
+   this.resetPasswordToken = crypto
+   .createHash("sha256")
+   .update(resetToken)
+   .digest("hex");
+ this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+
+ return resetToken;
+
+}
 // module.exports = mongoose.model("User", userSchema);
 export const User = mongoose.models.User || model("User",userSchema);
